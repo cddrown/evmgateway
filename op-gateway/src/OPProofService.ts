@@ -33,7 +33,7 @@ export interface OPProvableBlock {
 // OPOutputLookup contract is deployed with deterministic deployment
 // As a result, OPOutputLookup is always deployed to the same address
 // See OPOutputLookup.sol on op-verifier/contracts/OPOutputLookup.sol
-const OP_OUTPUT_LOOKUP = "0x956929bf186c26b4521aA31145948f4917f4D16e"
+const OP_OUTPUT_LOOKUP = "0x475dc200b71dbd9776518C299e281766FaDf4A30"
 
 const L2_TO_L1_MESSAGE_PASSER_ADDRESS =
   '0x4200000000000000000000000000000000000016';
@@ -89,7 +89,7 @@ export class OPProofService implements IProofService<OPProvableBlock> {
     const block = await this.opOutputLookup.getOPProvableBlock(
       await this.optimismPortal.getAddress(),
       this.minAge,
-      1000000000
+      1000000000 // Unlimited maximum age
     )
 
     console.log(block)
