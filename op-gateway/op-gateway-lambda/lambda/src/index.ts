@@ -1,8 +1,7 @@
 import { ServerLambda } from './aws-lambda-ccip-router';
-//import { propsDecoder } from '@ensdomains/evm-gateway';
 import { TrackerLambda, PropsDecoderLambda } from './aws-lambda-tracker';
 import { EVMGateway } from '@ensdomains/evm-gateway';
-import { OPProofService } from '../../../src/OPProofService';
+import { OPProofService } from './OPProofService';
 import { JsonRpcProvider } from 'ethers';
 import {
   APIGatewayProxyEventV2,
