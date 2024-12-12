@@ -1,8 +1,49 @@
-# Welcome to your CDK TypeScript project
+# Prerequisites
 
-This is a blank project for CDK development with TypeScript.
+## Install AWS CLI and CDK
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+Refer to https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html for instructions.
+
+## Configure AWS SSO
+
+In order to give cdk functions access to your AWS account, configure AWS single sign-on (SSO) to connect to an IAM Identity Centre login. This can be done with the 'aws configure sso' command. 
+
+See https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html for full details.
+
+# Deployment
+
+1. Log into AWS SSO
+```
+aws sso login
+```
+
+3. Set the following environment variables or add to a .env file in this directory
+
+- L1_PROVIDER_URL
+- L2_PROVIDER_URL
+- L2_OPTIMISM_PORTAL
+- DELAY
+- GATEWAY_PROVIDER
+- ENDPOINT_URL
+
+4. Deploy with the following steps
+```
+cdk bootstrap
+cdk synth
+cdk deploy
+```
+The lambda url is output towards the end of the last step under 'Outputs' as follows.
+```
+Outputs:
+OpGatewayLambdaStack.opGatewayOutput = https://...
+...
+```
+
+# Removing a deployed lambda function
+The lambda function can be taken down with
+```
+cdk destroy
+```
 
 ## Useful commands
 
