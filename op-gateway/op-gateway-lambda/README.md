@@ -36,21 +36,17 @@ cdk deploy
 The lambda url is output towards the end of the last step under 'Outputs' as follows.
 ```
 Outputs:
-OpGatewayLambdaStack.opGatewayOutput = https://...
+OpGatewayLambdaStack.OPGatewayapigwEndpoint... = <lambda url>
 ...
 ```
-
 # Removing a deployed lambda function
 The lambda function can be taken down with
 ```
 cdk destroy
 ```
-
-## Useful commands
+## Other useful commands
 
 * `npm run build`   compile typescript to js
 * `npm run watch`   watch for changes and compile
 * `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
 * `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
