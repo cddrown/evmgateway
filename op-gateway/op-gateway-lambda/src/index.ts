@@ -1,25 +1,25 @@
 import { ServerLambda } from './aws-lambda-ccip-router';
 import { TrackerLambda, PropsDecoderLambda } from './aws-lambda-tracker';
 import { EVMGateway } from '@ensdomains/evm-gateway';
-import { OPProofService } from './OPProofService';
+import { OPProofService } from '../../src/OPProofService';
 import { JsonRpcProvider } from 'ethers';
 import {
-  APIGatewayProxyEventV2,
-  APIGatewayProxyResultV2,
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
   Context,
 } from 'aws-lambda';
-import { AwsRequestContextV2 } from './AWSRequestContextV2';
+import { AwsRequestContext } from './AWSRequestContext';
 
 interface RouterLambda {
-  handle: (request: AwsRequestContextV2) => Promise<APIGatewayProxyResultV2>;
+  handle: (request: AwsRequestContext) => Promise<APIGatewayProxyResult>;
 }
 
 let app: RouterLambda;
 
-export const handler = async (
-  event: APIGatewayProxyEventV2,
+export const gatewayHandler = async (
+  event: APIGatewayProxyEvent,
   context: Context
-): Promise<APIGatewayProxyResultV2> => {
+): Promise<APIGatewayProxyResult> => {
   const L1_PROVIDER_URL: string = process.env.l1_provider_url || '';
   const L2_PROVIDER_URL: string = process.env.l2_provider_url || '';
   const L2_OPTIMISM_PORTAL: string = process.env.l2_optimism_portal || '';
@@ -56,19 +56,19 @@ export const handler = async (
   const props = propsDecoderAWS(event);
   await tracker.trackEvent(event, 'request', { props }, true);
 
-  const requestContext = new AwsRequestContextV2(event, context);
+  const requestContext = new AwsRequestContext(event, context);
   return app
     .handle(requestContext)
     .then(tracker.logResult.bind(tracker, propsDecoderAWS, event));
 };
 
-const propsDecoderAWS: PropsDecoderLambda<APIGatewayProxyEventV2> = (
-  request?: APIGatewayProxyEventV2
+const propsDecoderAWS: PropsDecoderLambda<APIGatewayProxyEvent> = (
+  request?: APIGatewayProxyEvent
 ) => {
-  if (!request || !request.rawPath) {
+  if (!request || !request.path) {
     return {};
   }
-  const trackingData = request.rawPath.match(
+  const trackingData = request.path.match(
     /\/0x[a-fA-F0-9]{40}\/0x[a-fA-F0-9]{1,}\.json/
   );
   if (trackingData) {

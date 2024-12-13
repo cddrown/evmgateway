@@ -6,17 +6,14 @@ import {
   JsonFragment,
 } from '@ethersproject/abi';
 import { hexlify } from '@ethersproject/bytes';
-//import { Router, createCors } from 'itty-router';
 import {
   HandlerFunc,
   HandlerDescription,
 } from '@ensdomains/ccip-read-cf-worker';
 import { isAddress, isBytesLike } from 'ethers';
 
-import { AwsFunctionRouterV2 } from './AWSFunctionRouterV2';
+import { AwsFunctionRouter } from './AWSFunctionRouter';
 import { FunctionResponse } from 'generic-rest-api-router';
-
-//const { corsify, preflight } = createCors();
 
 export interface RPCCall {
   to: BytesLike;
@@ -99,7 +96,7 @@ export class ServerLambda {
    * @returns An `itty-router.Router` object configured to serve as a CCIP read gateway.
    */
   makeApp(prefix: string) {
-    const app = new AwsFunctionRouterV2({
+    const app = new AwsFunctionRouter({
       resourcePath: prefix,
       includeCORS: true,
     })

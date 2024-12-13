@@ -14,8 +14,9 @@ See https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html for 
 
 1. Log into AWS SSO
 ```
-aws sso login
+aws sso login  --profile <profile-name>
 ```
+The --profile argument can be omitted if the profile is called 'default'.
 
 3. Set the following environment variables or add to a .env file in this directory
 

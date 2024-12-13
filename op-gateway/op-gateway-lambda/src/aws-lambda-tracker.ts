@@ -1,4 +1,4 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 interface TrackerOptions {
   apiEndpoint?: string;
@@ -19,7 +19,7 @@ interface RequestBody {
   data?: { [key: string]: number | string } | string | number;
 }
 
-export type PropsDecoderLambda<T extends APIGatewayProxyEventV2> = (
+export type PropsDecoderLambda<T extends APIGatewayProxyEvent> = (
   request?: T,
   response?: string
 ) => {
@@ -29,7 +29,7 @@ export type PropsDecoderLambda<T extends APIGatewayProxyEventV2> = (
 };
 
 export class TrackerLambda<
-  T extends APIGatewayProxyEventV2 = APIGatewayProxyEventV2,
+  T extends APIGatewayProxyEvent = APIGatewayProxyEvent,
 > {
   domain = '';
   enableLogging = false;
@@ -48,7 +48,7 @@ export class TrackerLambda<
   }
 
   private getUrl(req: T): string {
-    return `http://${req.requestContext.domainName}${req.rawPath}`;
+    return `http://${req.requestContext.domainName}${req.path}`;
   }
 
   async trackPageview(
@@ -99,10 +99,7 @@ export class TrackerLambda<
       }
 
       if (includeUserDetails) {
-        headers['X-Forwarded-For'] = req.requestContext.http.sourceIp;
-        //("originalUrl" in req ? req.socket?.remoteAddress : null) ||
-        //requestInfo.get("CF-Connecting-IP") ||
-        //"";
+        headers['X-Forwarded-For'] = req.requestContext.identity.sourceIp;
       }
 
       this.log(JSON.stringify(headers));
@@ -124,7 +121,7 @@ export class TrackerLambda<
     }
   }
 
-  private getStructuredResult(result: APIGatewayProxyResultV2) {
+  private getStructuredResult(result: APIGatewayProxyResult) {
     if (typeof result === 'string') {
       return JSON.parse(result);
     } else return result;
@@ -133,8 +130,8 @@ export class TrackerLambda<
   async logResult(
     decoder: PropsDecoderLambda<T> = () => ({}),
     req: T,
-    resp: APIGatewayProxyResultV2
-  ): Promise<APIGatewayProxyResultV2> {
+    resp: APIGatewayProxyResult
+  ): Promise<APIGatewayProxyResult> {
     const res = this.getStructuredResult(resp);
     if (!res.body) {
       return resp;
