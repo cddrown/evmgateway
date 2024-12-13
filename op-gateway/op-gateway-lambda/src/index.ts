@@ -27,8 +27,6 @@ export const gatewayHandler = async (
   const GATEWAY_DOMAIN: string = process.env.gateway_domain || '';
   const ENDPOINT_URL: string = process.env.endpoint_url || '';
 
-  // note - tracker doesn't support lambda functions case
-
   const tracker = new TrackerLambda(GATEWAY_DOMAIN, {
     apiEndpoint: ENDPOINT_URL,
     enableLogging: true,
@@ -50,7 +48,7 @@ export const gatewayHandler = async (
 
     const server = new ServerLambda();
     gateway.add(server);
-    app = server.makeApp('/');
+    app = server.makeApp('');
   }
 
   const props = propsDecoderAWS(event);
