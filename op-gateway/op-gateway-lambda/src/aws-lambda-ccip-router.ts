@@ -83,7 +83,7 @@ export class ServerLambda {
 
   /**
    * // set up server object here
-   * const app = server.makeApp('/');
+   * const app = server.makeApp('');
    * module.exports = {
    *  fetch: function (request, _env, _context) {
    *    return app.handle(request)
@@ -101,12 +101,15 @@ export class ServerLambda {
       includeCORS: true,
     })
       .get('', async (route) => {
+        console.log('In get with no params');
         return route.okResponse('hey ho!');
       })
       .get(':sender/:callData.json', async (route, requestContext) => {
+        console.log('In get with params');
         const sender = route.getPathParams(requestContext).sender;
         const callData = route.getPathParams(requestContext).callData;
-
+        console.log('sender: ', sender);
+        console.log('calldata: ', callData);
         if (!isAddress(sender) || !isBytesLike(callData)) {
           return route.errorResponse(400);
         }
@@ -126,9 +129,12 @@ export class ServerLambda {
         }
       })
       .post('', async (route, requestContext) => {
+        console.log('in post');
         const requestBody = JSON.parse(requestContext.getBody());
         const sender = requestBody.sender;
         const callData = requestBody.data;
+        console.log('sender: ', sender);
+        console.log('calldata: ', callData);
 
         if (!isAddress(sender) || !isBytesLike(callData)) {
           return route.errorResponse(400);

@@ -19,6 +19,10 @@ interface RequestBody {
   data?: { [key: string]: number | string } | string | number;
 }
 
+interface LogResponse {
+  data: string;
+}
+
 export type PropsDecoderLambda<T extends APIGatewayProxyEvent> = (
   request?: T,
   response?: string
@@ -136,10 +140,10 @@ export class TrackerLambda<
     if (!res.body) {
       return resp;
     }
-    const clonedResp = res.clone();
     try {
-      const responseText = await clonedResp.text();
-      const response: { data: string } = JSON.parse(responseText);
+      const response: LogResponse = {
+        data: resp.body,
+      };
 
       const props = {
         result: response.data.substring(0, 200),

@@ -24,7 +24,7 @@ The --profile argument can be omitted if the profile is called 'default'.
 - L2_PROVIDER_URL
 - L2_OPTIMISM_PORTAL
 - DELAY
-- GATEWAY_PROVIDER
+- GATEWAY_DOMAIN
 - ENDPOINT_URL
 
 4. Deploy with the following steps

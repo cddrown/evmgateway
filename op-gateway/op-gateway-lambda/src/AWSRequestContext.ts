@@ -16,7 +16,7 @@ export class AwsRequestContext implements RequestContext {
   }
 
   getPath(): string {
-    return this.event.requestContext.path;
+    return this.event.path;
   }
 
   getBody(): string {
