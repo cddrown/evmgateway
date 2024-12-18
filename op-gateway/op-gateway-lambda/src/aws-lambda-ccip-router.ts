@@ -101,13 +101,11 @@ export class ServerLambda {
       includeCORS: true,
     })
       .get('', async (route) => {
-        console.log('In get with no params');
         return route.okResponse('hey ho!');
       })
-      .get(':sender/:callData.json', async (route, requestContext) => {
-        console.log('In get with params');
+      .get('/:sender/:callData.json', async (route, requestContext) => {
         const sender = route.getPathParams(requestContext).sender;
-        const callData = route.getPathParams(requestContext).callData;
+        let callData = route.getPathParams(requestContext).callData;
         console.log('sender: ', sender);
         console.log('calldata: ', callData);
         if (!isAddress(sender) || !isBytesLike(callData)) {
@@ -129,12 +127,9 @@ export class ServerLambda {
         }
       })
       .post('', async (route, requestContext) => {
-        console.log('in post');
         const requestBody = JSON.parse(requestContext.getBody());
         const sender = requestBody.sender;
         const callData = requestBody.data;
-        console.log('sender: ', sender);
-        console.log('calldata: ', callData);
 
         if (!isAddress(sender) || !isBytesLike(callData)) {
           return route.errorResponse(400);
@@ -176,20 +171,23 @@ export class ServerLambda {
 
     const inputs: ethers.ParamType[] = [];
     for (const input in handler.type.inputs) {
-      if (typeof input !== 'string') {
-        inputs.push(input);
-      }
+      const inputStr : string = JSON.stringify(handler.type.inputs[input]);
+      const param :ethers.ParamType = JSON.parse(inputStr);
+        inputs.push(param);
     }
     // Decode function arguments
     const args = abiCoder.decode(inputs, '0x' + calldata.slice(10));
 
     // Call the handler
     const result = await handler.func(args, call);
+    console.log('result of fn call: ', result);
 
     const outputs: ethers.ParamType[] = [];
-    for (const output in handler.type.inputs) {
-      if (typeof output !== 'string') {
-        inputs.push(output);
+    if(handler.type.outputs){
+      for (const output in handler.type.outputs) {
+        const outputStr : string = JSON.stringify(handler.type.outputs[output]);
+        const param :ethers.ParamType = JSON.parse(outputStr);
+        outputs.push(param);
       }
     }
 

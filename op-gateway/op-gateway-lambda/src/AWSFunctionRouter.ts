@@ -20,7 +20,7 @@ export class AwsFunctionRouter<T> extends FunctionRouter<T, AwsRequestContext> {
     requestContext: AwsRequestContext
   ): Promise<APIGatewayProxyResult> {
     const response = await super.handleRequest(requestContext);
-
+    
     return {
       headers: response.headers,
       statusCode: response.statusCode,

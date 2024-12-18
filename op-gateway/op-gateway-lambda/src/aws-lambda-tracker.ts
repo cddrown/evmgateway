@@ -27,9 +27,9 @@ export type PropsDecoderLambda<T extends APIGatewayProxyEvent> = (
   request?: T,
   response?: string
 ) => {
-  //[key: string]: any;
-  sender?: string | undefined;
-  callData?: string | undefined;
+  [key: string]: any;
+  //sender?: string | undefined;
+  //callData?: string | undefined;
 };
 
 export class TrackerLambda<
@@ -116,10 +116,12 @@ export class TrackerLambda<
       });
 
       if (!response.ok) {
-        throw new Error(`Plausible API responded with ${response.status}`);
+        //throw new Error(`Plausible API responded with ${response.status}`);
+        console.error(`Plausible API responded with ${response.status}`);
       }
-
-      this.log(`Event tracked: ${name}`);
+      else {
+        this.log(`Event tracked: ${name}`);
+      }
     } catch (err) {
       console.error(`Plausible error: ${err}`);
     }
@@ -149,7 +151,6 @@ export class TrackerLambda<
         result: response.data.substring(0, 200),
         ...(!!decoder && decoder(req, response.data)),
       };
-
       await this.trackEvent(req, 'result', { props }, true);
     } catch (error) {
       this.log(`logResult error: ${error}`);

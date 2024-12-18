@@ -1,6 +1,7 @@
 import { Construct } from 'constructs';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { Duration } from 'aws-cdk-lib';
 import dotenv from 'dotenv';
 
 dotenv.config(); // Load environment variables from .env file
@@ -17,6 +18,7 @@ export class OPGateway extends Construct {
         gateway_domain: process.env.GATEWAY_DOMAIN || '',
         endpoint_url: process.env.ENDPOINT_URL || '',
       },
+      timeout: Duration.seconds(15),
     });
     new LambdaRestApi(this, 'apigw', {
       handler: opGatewayFunction,
