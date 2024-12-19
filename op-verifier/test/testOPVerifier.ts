@@ -71,6 +71,7 @@ describe('OPVerifier', () => {
           ethers.toUtf8String(req.body)
         );
       }
+      console.log('request url = ', req.url);
       const response = await r;
       return {
         statusCode: response.statusCode,

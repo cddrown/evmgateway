@@ -171,9 +171,8 @@ export class ServerLambda {
 
     const inputs: ethers.ParamType[] = [];
     for (const input in handler.type.inputs) {
-      const inputStr : string = JSON.stringify(handler.type.inputs[input]);
-      const param :ethers.ParamType = JSON.parse(inputStr);
-        inputs.push(param);
+      const param = <unknown>handler.type.inputs[input];
+      inputs.push(<ethers.ParamType>param);
     }
     // Decode function arguments
     const args = abiCoder.decode(inputs, '0x' + calldata.slice(10));
@@ -185,9 +184,8 @@ export class ServerLambda {
     const outputs: ethers.ParamType[] = [];
     if(handler.type.outputs){
       for (const output in handler.type.outputs) {
-        const outputStr : string = JSON.stringify(handler.type.outputs[output]);
-        const param :ethers.ParamType = JSON.parse(outputStr);
-        outputs.push(param);
+        const param = <unknown>handler.type.outputs[output];
+        outputs.push(<ethers.ParamType>param);
       }
     }
 

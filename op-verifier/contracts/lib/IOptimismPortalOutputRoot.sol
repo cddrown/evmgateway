@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { IDisputeGameFactory, GameType } from "src/dispute/interfaces/IDisputeGameFactory.sol";
-import { Types } from "src/libraries/Types.sol";
+import { IDisputeGameFactory, GameType } from "./dispute/interfaces/IDisputeGameFactory.sol";
+//import { Types } from "src/libraries/Types.sol";
+//import { IDisputeGameFactory, GameType } from '@eth-optimism/contracts-bedrock/src/dispute/interfaces/IDisputeGameFactory.sol';
+import { Types } from '@eth-optimism/contracts-bedrock/src/libraries/Types.sol';
 
 interface IL2OutputOracle {
     function getL2Output(
