@@ -111,8 +111,6 @@ export class ServerLambda {
       .get('/:sender/:callData.json', async (route, requestContext) => {
         const sender = route.getPathParams(requestContext).sender;
         let callData = route.getPathParams(requestContext).callData;
-        console.log('sender: ', sender);
-        console.log('calldata: ', callData);
         if (!isAddress(sender) || !isBytesLike(callData)) {
           return route.errorResponse(400);
         }
@@ -172,28 +170,11 @@ export class ServerLambda {
       };
     }
 
-    //const abiCoder: AbiCoder = AbiCoder.defaultAbiCoder();
-
-    //const inputs: ethers.ParamType[] = [];
-    //for (const input in handler.type.inputs) {
-    //  const param = <unknown>handler.type.inputs[input];
-    //  inputs.push(<ethers.ParamType>param);
-    //}
-    // Decode function arguments
     const args = defaultAbiCoder.decode(handler.type.inputs, '0x' + calldata.slice(10));
 
     // Call the handler
     const result = await handler.func(args, call);
-    console.log('result of fn call: ', result);
-
-    //const outputs: ethers.ParamType[] = [];
-    //if(handler.type.outputs){
-    //  for (const output in handler.type.outputs) {
-    //    const param = <unknown>handler.type.outputs[output];
-    //    outputs.push(<ethers.ParamType>param);
-    //  }
-    //}
-
+  
     // Encode return data
     return {
       status: 200,

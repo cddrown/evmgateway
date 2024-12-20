@@ -28,8 +28,6 @@ export type PropsDecoderLambda<T extends APIGatewayProxyEvent> = (
   response?: string
 ) => {
   [key: string]: any;
-  //sender?: string | undefined;
-  //callData?: string | undefined;
 };
 
 export class TrackerLambda<
@@ -116,8 +114,7 @@ export class TrackerLambda<
       });
 
       if (!response.ok) {
-        //throw new Error(`Plausible API responded with ${response.status}`);
-        console.error(`Plausible API responded with ${response.status}`);
+        throw new Error(`Plausible API responded with ${response.status}`);
       }
       else {
         this.log(`Event tracked: ${name}`);
