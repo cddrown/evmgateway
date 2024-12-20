@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 import './dispute/interfaces/IFaultDisputeGame.sol';
-//import '@eth-optimism/contracts-bedrock/src/dispute/interfaces/IFaultDisputeGame.sol';
 import {IOptimismPortalOutputRoot, IDisputeGameFactory} from './IOptimismPortalOutputRoot.sol';
 import { GameStatus, Timestamp } from "./dispute/lib/Types.sol";
 

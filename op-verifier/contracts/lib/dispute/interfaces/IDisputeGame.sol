@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 import { IInitializable } from "./IInitializable.sol";
-//import { Timestamp, GameStatus, GameType, Claim, Hash } from "@eth-optimism/contracts-bedrock/src/dispute/lib/Types.sol";
 import { Timestamp, GameStatus, GameType, Claim, Hash } from "../lib/Types.sol";
 
 interface IDisputeGame is IInitializable {

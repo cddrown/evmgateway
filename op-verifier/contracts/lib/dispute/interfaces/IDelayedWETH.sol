@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-//import { ISuperchainConfig } from "@eth-optimism/contracts-bedrock/src/L1/interfaces/ISuperchainConfig.sol";
 import { ISuperchainConfig } from "../lib/ISuperchainConfig.sol";
 
 interface IDelayedWETH {

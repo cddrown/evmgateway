@@ -3,9 +3,7 @@ pragma solidity ^0.8.0;
 
 import { IFaultDisputeGame } from "./IFaultDisputeGame.sol";
 import { IDisputeGameFactory } from "./IDisputeGameFactory.sol";
-//import { ISuperchainConfig } from "@eth-optimism/contracts-bedrock/src/L1/interfaces/ISuperchainConfig.sol";
 import { ISuperchainConfig } from "../lib/ISuperchainConfig.sol";
-//import { GameType, Hash, OutputRoot } from "@eth-optimism/contracts-bedrock/src/dispute/lib/Types.sol";
 import { GameType, Hash, OutputRoot } from "../lib/Types.sol";
 
 interface IAnchorStateRegistry {

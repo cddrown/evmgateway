@@ -6,7 +6,6 @@ import { IDelayedWETH } from "./IDelayedWETH.sol";
 import { IAnchorStateRegistry } from "./IAnchorStateRegistry.sol";
 import { IBigStepper } from "./IBigStepper.sol";
 import { Types } from "@eth-optimism/contracts-bedrock/src/libraries/Types.sol";
-//import { GameType, Claim, Position, Clock, Hash, Duration } from "@eth-optimism/contracts-bedrock/src/dispute/lib/Types.sol";
 import { GameType, Claim, Position, Clock, Hash, Duration } from "../lib/Types.sol";
 
 interface IFaultDisputeGame is IDisputeGame {

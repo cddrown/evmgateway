@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-//import { IPreimageOracle } from "@eth-optimism/contracts-bedrock/src/cannon/interfaces/IPreimageOracle.sol";
 import { IPreimageOracle } from "../lib/IPreimageOracle.sol";
 
 /// @title IBigStepper

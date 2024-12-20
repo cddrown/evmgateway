@@ -2,7 +2,6 @@
 pragma solidity 0.8.26;
 
 import "./dispute/interfaces/IFaultDisputeGame.sol";
-//import '@eth-optimism/contracts-bedrock/src/dispute/interfaces/IFaultDisputeGame.sol';
 import "./DisputeGameLookup.sol";
 import "./L2OutputOracleLookup.sol";
 import "./IOptimismPortalOutputRoot.sol";

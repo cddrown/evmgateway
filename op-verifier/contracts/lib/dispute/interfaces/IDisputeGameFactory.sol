@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 import { IDisputeGame } from "./IDisputeGame.sol";
-//import { GameId, Timestamp, Claim, Hash, GameType } from "@eth-optimism/contracts-bedrock/src/dispute/lib/Types.sol";
 import { GameId, Timestamp, Claim, Hash, GameType } from "../lib/Types.sol";
 
 interface IDisputeGameFactory {
