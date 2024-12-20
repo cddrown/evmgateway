@@ -20,7 +20,7 @@ export class OPGateway extends Construct {
       },
       timeout: Duration.seconds(15),
     });
-    new LambdaRestApi(this, 'apigw', {
+    new LambdaRestApi(this, 'OpGatewayApi', {
       handler: opGatewayFunction,
     });
   }

@@ -36,7 +36,7 @@ cdk deploy
 The lambda url is output towards the end of the last step under 'Outputs' as follows.
 ```
 Outputs:
-OpGatewayLambdaStack.OPGatewayapigwEndpoint... = <lambda url>
+OpGatewayLambdaStack.OPGatewayOpGatewayApiEndpoint... = <lambda url>
 ...
 ```
 To update an existing lambda function deployment without modifying the url, only the following steps are required.
