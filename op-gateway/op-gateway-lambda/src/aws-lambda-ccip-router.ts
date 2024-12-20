@@ -7,7 +7,7 @@ import {
   Result,
   defaultAbiCoder,
 } from '@ethersproject/abi';
-import { hexlify, BytesLike, isBytesLike } from '@ethersproject/bytes'
+import { hexlify, BytesLike, isBytesLike } from '@ethersproject/bytes';
 import { isAddress } from '@ethersproject/address';
 //import { isAddress, isBytesLike } from 'ethers';
 
@@ -29,7 +29,10 @@ type RPCResponseBody = {
   message?: string;
 };
 
-export type HandlerFunc = (args: Result, req: RPCCall) => Promise<Array<any>> | Array<any>;
+export type HandlerFunc = (
+  args: Result,
+  req: RPCCall
+) => Promise<Array<any>> | Array<any>;
 
 export interface HandlerDescription {
   type: string;
@@ -110,7 +113,7 @@ export class ServerLambda {
       })
       .get('/:sender/:callData.json', async (route, requestContext) => {
         const sender = route.getPathParams(requestContext).sender;
-        let callData = route.getPathParams(requestContext).callData;
+        const callData = route.getPathParams(requestContext).callData;
         if (!isAddress(sender) || !isBytesLike(callData)) {
           return route.errorResponse(400);
         }
@@ -170,11 +173,14 @@ export class ServerLambda {
       };
     }
 
-    const args = defaultAbiCoder.decode(handler.type.inputs, '0x' + calldata.slice(10));
+    const args = defaultAbiCoder.decode(
+      handler.type.inputs,
+      '0x' + calldata.slice(10)
+    );
 
     // Call the handler
     const result = await handler.func(args, call);
-  
+
     // Encode return data
     return {
       status: 200,

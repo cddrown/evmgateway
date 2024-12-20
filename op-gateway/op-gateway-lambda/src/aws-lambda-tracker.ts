@@ -115,8 +115,7 @@ export class TrackerLambda<
 
       if (!response.ok) {
         throw new Error(`Plausible API responded with ${response.status}`);
-      }
-      else {
+      } else {
         this.log(`Event tracked: ${name}`);
       }
     } catch (err) {
