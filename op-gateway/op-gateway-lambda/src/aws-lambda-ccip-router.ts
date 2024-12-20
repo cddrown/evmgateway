@@ -1,16 +1,15 @@
-import { ethers, BytesLike, AbiCoder } from 'ethers';
+//import { ethers, BytesLike, AbiCoder, hexlify, Fragment, FunctionFragment, Interface, JsonFragment } from 'ethers';
 import {
   Fragment,
   FunctionFragment,
   Interface,
   JsonFragment,
+  Result,
+  defaultAbiCoder,
 } from '@ethersproject/abi';
-import { hexlify } from '@ethersproject/bytes';
-import {
-  HandlerFunc,
-  HandlerDescription,
-} from '@ensdomains/ccip-read-cf-worker';
-import { isAddress, isBytesLike } from 'ethers';
+import { hexlify, BytesLike, isBytesLike } from '@ethersproject/bytes'
+import { isAddress } from '@ethersproject/address';
+//import { isAddress, isBytesLike } from 'ethers';
 
 import { AwsFunctionRouter } from './AWSFunctionRouter';
 import { FunctionResponse } from 'generic-rest-api-router';
@@ -30,6 +29,12 @@ type RPCResponseBody = {
   message?: string;
 };
 
+export type HandlerFunc = (args: Result, req: RPCCall) => Promise<Array<any>> | Array<any>;
+
+export interface HandlerDescription {
+  type: string;
+  func: HandlerFunc;
+}
 interface Handler {
   type: FunctionFragment;
   func: HandlerFunc;
@@ -167,34 +172,34 @@ export class ServerLambda {
       };
     }
 
-    const abiCoder: AbiCoder = AbiCoder.defaultAbiCoder();
+    //const abiCoder: AbiCoder = AbiCoder.defaultAbiCoder();
 
-    const inputs: ethers.ParamType[] = [];
-    for (const input in handler.type.inputs) {
-      const param = <unknown>handler.type.inputs[input];
-      inputs.push(<ethers.ParamType>param);
-    }
+    //const inputs: ethers.ParamType[] = [];
+    //for (const input in handler.type.inputs) {
+    //  const param = <unknown>handler.type.inputs[input];
+    //  inputs.push(<ethers.ParamType>param);
+    //}
     // Decode function arguments
-    const args = abiCoder.decode(inputs, '0x' + calldata.slice(10));
+    const args = defaultAbiCoder.decode(handler.type.inputs, '0x' + calldata.slice(10));
 
     // Call the handler
     const result = await handler.func(args, call);
     console.log('result of fn call: ', result);
 
-    const outputs: ethers.ParamType[] = [];
-    if(handler.type.outputs){
-      for (const output in handler.type.outputs) {
-        const param = <unknown>handler.type.outputs[output];
-        outputs.push(<ethers.ParamType>param);
-      }
-    }
+    //const outputs: ethers.ParamType[] = [];
+    //if(handler.type.outputs){
+    //  for (const output in handler.type.outputs) {
+    //    const param = <unknown>handler.type.outputs[output];
+    //    outputs.push(<ethers.ParamType>param);
+    //  }
+    //}
 
     // Encode return data
     return {
       status: 200,
       body: {
         data: handler.type.outputs
-          ? hexlify(abiCoder.encode(outputs, result))
+          ? hexlify(defaultAbiCoder.encode(handler.type.outputs, result))
           : '0x',
       },
     };

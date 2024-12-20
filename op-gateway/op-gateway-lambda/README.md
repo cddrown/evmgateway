@@ -18,7 +18,7 @@ aws sso login  --profile <profile-name>
 ```
 The --profile argument can be omitted if the profile is called 'default'.
 
-3. Set the following environment variables or add to a .env file in this directory
+3. Set the following environment variables or add to a .env file in this directory. Alternatively these environment variables can be set later in the AWS Lambda function console.
 
 - L1_PROVIDER_URL
 - L2_PROVIDER_URL
@@ -39,6 +39,12 @@ Outputs:
 OpGatewayLambdaStack.OPGatewayapigwEndpoint... = <lambda url>
 ...
 ```
+To update an existing lambda function deployment without modifying the url, only the following steps are required.
+```
+cdk synth
+cdk deploy
+```
+
 # Removing a deployed lambda function
 The lambda function can be taken down with
 ```
