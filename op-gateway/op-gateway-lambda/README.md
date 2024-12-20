@@ -6,19 +6,19 @@ Refer to https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html for instr
 
 ## Configure AWS SSO
 
-In order to give cdk functions access to your AWS account, configure AWS single sign-on (SSO) to connect to an IAM Identity Centre login. This can be done with the 'aws configure sso' command. 
+In order to give cdk functions access to your AWS account, configure AWS single sign-on (SSO) to connect to an IAM Identity Centre login.
 
 See https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html for full details.
 
 # Deployment
 
-1. Log into AWS SSO
+1. Log into AWS SSO if not already logged in.
 ```
 aws sso login  --profile <profile-name>
 ```
 The --profile argument can be omitted if the profile is called 'default'.
 
-3. Set the following environment variables or add to a .env file in this directory. Alternatively these environment variables can be set later in the AWS Lambda function console.
+2. Set the following environment variables or add to a .env file in this directory. Alternatively these environment variables can be set later in the AWS Lambda function console.
 
 - L1_PROVIDER_URL
 - L2_PROVIDER_URL
@@ -27,7 +27,7 @@ The --profile argument can be omitted if the profile is called 'default'.
 - GATEWAY_DOMAIN
 - ENDPOINT_URL
 
-4. Deploy with the following steps
+3. Deploy with the following steps
 ```
 cdk bootstrap
 cdk synth
@@ -50,6 +50,7 @@ The lambda function can be taken down with
 ```
 cdk destroy
 ```
+
 ## Other useful commands
 
 * `npm run build`   compile typescript to js
